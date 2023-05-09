@@ -34,7 +34,7 @@ Number of books: Number of books generated
 Type: {
 Format: {;[fiction/non fiction/imagination];, ;"number";}
 Type of books: {
-Imagination: Generate a book that didn't exist in (only using imagination)
+Imagination: Generate a book that didn't exist in (only using imagination) (the title should be in the language selected)
 Non fiction: Generate a non fiction book
 Fiction: Generate a fiction book
 Format: {
@@ -88,7 +88,6 @@ So, if: {
 }
 }
 Output format: {
-Normal: {
 Book %num%:
 Title: %book_name%
 Fiction: %fiction%
@@ -101,19 +100,4 @@ Type: %type%
 %ln%
 
 Note: Output should be in list form
-
-}
-}
-
-
-Checks: {
-Checks to detect issue 
-Checks to do: {
-Note: {
-if all checks passed, continue operation
-if one of the checks failed, abort operation
-%err% = Where error occured
-}
-Check format in options in settings is correct or not (if error, output: Oops, seems like there is an error in settings! Error at %err% %ln% Rerun the whole prompt when fixed.)
-}
 }
