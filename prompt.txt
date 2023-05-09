@@ -1,4 +1,4 @@
-Generate a list of books with the format and rules below:
+Generate a list of books with the format, rules and settings below:
 {
 Main Settings: {
 Language: {
