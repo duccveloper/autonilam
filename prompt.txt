@@ -1,0 +1,140 @@
+Generate a list of books with the format and rules below:
+{
+Main Settings: {
+Language: {
+Bahasa Melayu, 70
+English, 30
+}
+Number of books: 5
+Type: {
+Fiction, 25
+Non fiction, def
+Imagination, abc
+}
+Output format: normal //Type: normal, json//
+}
+
+
+
+Description of options in settings: {
+
+Language: {
+Format: {language, ;"number";}
+Note: {
+*language*, *percentage*
+*language*: Language of the book
+*percentage*: Percentage of the language of the book to be generated
+Example: {
+English, 10
+Bahasa Melayu, 90
+So, the list will be: 10% of the books is in English and 90% of the books is in BM
+}
+}
+}
+Number of books: Number of books generated
+Type: {
+Format: {;[fiction/non fiction/imagination];, ;"number";}
+Type of books: {
+Imagination: Generate a book that didn't exist in (only using imagination)
+Non fiction: Generate a non fiction book
+Fiction: Generate a fiction book
+Format: {
+*type*, percentage*
+Same with the percentage system in language option, *type* represent type of books and *percentage* represent percentage of the type of the book to be generated
+Example: {
+Fiction, 10
+Non fiction, 70
+Imagination, 20
+So, the list will be: 10% of the books is fiction, 70% of the books is non fiction and 20% of the books is imagination
+}
+}
+}
+Output format: {
+Outputs in a specified format
+Format: {;[normal/json];}
+Options: {
+Json: Shows output in prepared json format
+Normal: Shows output in prepared normal format
+}
+Note: Prepared output is in output format section
+}
+Important: {
+All options in settings is not case sensitive
+}
+}
+
+Note: {
+;[options];"type": {
+options for arguments formatting (ONLY FOR FORMAT OPTION)
+(force user to follow the options or type specified)
+;"type";: "type" act as a function to specify specific argument type (example: number, string, boolean) (force user to follow the options) (not case sensitive)
+;[options];： [options] act as a function to list down the functions (/ symbol act as a spliting for multiple options) (force user to follow the options) (not case sensitive)
+;<options>;: <options> act as a function to list down the functions (/ symbol act as a spliting for multiple options) (allow user to not follow the options) (not case sensitive)
+;?label?;: for naming purpose (users no need to follow this)
+;#[argument]#;: act as a function that can accept if the user doesn't have any arguments inside
+For example: {
+;?books?"number";: force user to follow the "number" type
+;?count?[lol/no/idk]: user can choose either lol, no or idk option
+;<1/3.141592654>"number";: user can choose either 1 or 3.141592654 but they also can type other numbers
+;#;?books?"number";#;: user can choose whether they want to have the books arguments or not
+}
+}
+*[argument]*: act as placeholder of an argument and used to explaination
+%[variable name]%: this is a variable
+//[comment]//: this is a comment for description purpose (no need to read these)
+[title]: {[description]}: functions as a function to make things more tidy and understandable
+\[symbol]\: functions as special character or variable escaping (examples to ignore: {
+\%\not a variable\%\
+\{\hi\}\ (this is not a function for understanding purpose)
+\//\hi\//\ (this is not a comment)
+)
+So, if: {
+%book_name% = name of the book
+%author% = author of the book
+%fiction?% = book is fiction or not (return true/false)
+%language% = language of book
+%synopsis% = synopsis of the book (depends of language of the book) (Example: if the book is in BM, generate in BM, if the book is in English, generate in English)
+%publisher% = publisher of the book
+%year% = year of publish
+%num% = No. of the book in list
+%ln% = placeholder for new line (for spilting)
+%type% = book type (refer to main settings)
+}
+}
+Output format: {
+Normal: {
+Book %num%:
+Title: %book_name%
+Fiction: %fiction%
+Language: %language%
+Synopsis: %synopsis%
+Author: %author%
+Publisher: %publisher%
+Year of publish: %year%
+Type: %type%
+%ln%
+
+Note: Output should be in list form
+
+}
+Json: {
+\{\"books":\{\"index": %num%, "title": "%book_name%", "fiction": %fiction%, "language": "%language%", "synopsis": %synopsis%, "author": "%author%", "publisher": "%publisher%", "year_of_publish": %year%, "type": "%type%"\}\\}\
+Note: {
+for json, connect the books to one json string and shouldn't broken halfway
+should be in json code block format
+}
+}
+}
+
+
+Checks: {
+Checks to detect issue 
+Checks to do: {
+Note: {
+if all checks passed, continue operation
+if one of the checks failed, abort operation
+%err% = Where error occured
+}
+Check format in options in settings is correct or not (if error, output: Oops, seems like there is an error in settings! Error at %err% %ln% Rerun the whole prompt when fixed.)
+}
+}
