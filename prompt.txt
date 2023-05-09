@@ -8,8 +8,8 @@ English, 30
 Number of books: 5
 Type: {
 Fiction, 25
-Non fiction, def
-Imagination, abc
+Non fiction, 25
+Imagination, 50
 }
 Output format: normal //Type: normal, json//
 }
