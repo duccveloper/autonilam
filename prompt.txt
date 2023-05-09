@@ -1,4 +1,4 @@
-Generate a list of books with the format and rules below with NO CODES:
+Generate a list of books with the format and rules below:
 {
 Main Settings: {
 Language: {
@@ -11,7 +11,6 @@ Fiction, 25
 Non fiction, 25
 Imagination, 50
 }
-Output format: normal //Type: normal, json//
 }
 
 
@@ -49,14 +48,6 @@ So, the list will be: 10% of the books is fiction, 70% of the books is non ficti
 }
 }
 }
-Output format: {
-Outputs in a specified format
-Format: {;[normal/json];}
-Options: {
-Json: Shows output in prepared json format
-Normal: Shows output in prepared normal format
-}
-Note: Prepared output is in output format section
 }
 Important: {
 All options in settings is not case sensitive
@@ -83,11 +74,6 @@ For example: {
 %[variable name]%: this is a variable
 //[comment]//: this is a comment for description purpose (no need to read these)
 [title]: {[description]}: functions as a function to make things more tidy and understandable
-\[symbol]\: functions as special character or variable escaping (examples to ignore: {
-\%\not a variable\%\
-\{\hi\}\ (this is not a function for understanding purpose)
-\//\hi\//\ (this is not a comment)
-)
 So, if: {
 %book_name% = name of the book
 %author% = author of the book
@@ -116,13 +102,6 @@ Type: %type%
 
 Note: Output should be in list form
 
-}
-Json: {
-\{\"books":\{\"index": %num%, "title": "%book_name%", "fiction": %fiction%, "language": "%language%", "synopsis": %synopsis%, "author": "%author%", "publisher": "%publisher%", "year_of_publish": %year%, "type": "%type%"\}\\}\
-Note: {
-for json, connect the books to one json string and shouldn't broken halfway
-should be in json code block format
-}
 }
 }
 
