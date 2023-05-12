@@ -245,6 +245,9 @@ a {
 .custom-control-label::before {
   background-color: #393939 !important;
 }
+.raphael-group-158-background > rect, .raphael-group-4-background > rect, raphael-group-85-background > rect {
+  fill: #393939;
+}
   `;
   document.head.appendChild(style);
   if (window.location.href.indexOf("https://nilamjohor.edu.my/aktiviti-bacaan/index") > -1) {
@@ -252,11 +255,11 @@ a {
     var icon = btn.getElementsByTagName("i")[0];
     icon.classList.remove("fas", "fa-search-minus");
     icon.classList.add("fa-solid", "fa-rotate-right");
-    var btn = document.getElementsByClassName("btn-group")[0];
-    var btn2 = btn.children[0];
-    var icon = btn2.getElementsByTagName("i")[0];
-    icon.classList.remove("fas", "fa-search-plus");
-    icon.classList.add("fa-solid", "fa-magnifying-glass");
+    var btn2 = document.getElementsByClassName("btn-group")[0];
+    var btn22 = btn2.children[0];
+    var icon2 = btn22.getElementsByTagName("i")[0];
+    icon2.classList.remove("fas", "fa-search-plus");
+    icon2.classList.add("fa-solid", "fa-magnifying-glass");
   }
   var log = document.getElementsByClassName("nav-link")[2];
   var logout = log.getElementsByTagName("i")[0];
