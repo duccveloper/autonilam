@@ -223,9 +223,6 @@ a {
 .skin-blue .sidebar-nav ul li a.active, .skin-blue .sidebar-nav ul li a:hover {
   color: #77839d !important;
 }
-.raphael-group-220-plot-group > rect {
-  fill: #4d4d4d !important;
-}
 .progress-bar.bg-primary {
   border: 1px solid #fb9678 !important;
   background-color: #393939 !important;
