@@ -193,20 +193,4 @@ span.input-group-text {
   logout.classList.remove("fa", "fa-power-off");
   logout.classList.add("fa-solid", "fa-arrow-right-from-bracket");
 }
-
-function autoLogin(username, password) {
-  const xhr = new XMLHttpRequest();
-  const key = getKey();
-  xhr.open("POST", "https://nilamjohor.edu.my/site/login");
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  const body =
-    "_csrf-frontend=" + key + "&LoginForm[username]=" + username + "&LoginForm[password]=" + password + "&login-button=";
-  xhr.onload = () => {
-    if (xhr.status == 302 || xhr.status == 200) {
-      window.location.href = "https://nilamjohor.edu.my/";
-    } else {
-      console.log(`Error: ${xhr.status}`);
-    }
-  };
-  xhr.send(body);
-}
+darkmode()
