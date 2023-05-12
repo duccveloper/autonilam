@@ -1,3 +1,16 @@
+// ==UserScript==
+// @name         Auto Nilam
+// @namespace    https://duccweb.tk
+// @version      0.1
+// @description  johor nilam sucks
+// @author       duccveloper
+// @match        https://nilamjohor.edu.my/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=google.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
 function darkmode() {
   var fontawesome = document.createElement("link");
   fontawesome.rel = "stylesheet";
@@ -267,3 +280,4 @@ a {
   logout.classList.add("fa-solid", "fa-arrow-right-from-bracket");
 }
 darkmode()
+})();
