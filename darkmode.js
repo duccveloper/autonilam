@@ -10,143 +10,140 @@
 // @run-at document-end
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
-var version = "0.0.1 [ALPHA]";
+    var version = "0.0.1 [ALPHA]";
+    var language_api_key = "64c3d7fffecc2e887a6f74649db2ad87"
 
-function sendNilam(category, language, title, is_synopsis, synopsis, author, publisher, year) {
-    const xhr = new XMLHttpRequest();
-    const key = getKey();
-    const date = getDate();
-    xhr.open("POST", "https://nilamjohor.edu.my/aktiviti-bacaan/create");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    const body =
-        "_csrf-frontend=" + key + "&AktivitiBacaan[akb_mod_kategori_bahan]=" + category + "&AktivitiBacaan[akb_mod_kategori_bahasa]=" + language + "&AktivitiBacaan[akb_mod_judul]=" + title + "&AktivitiBacaan[akb_mod_tick_sinopsis]=&AktivitiBacaan[akb_mod_tick_sinopsis]=" + is_synopsis + "&AktivitiBacaan[akb_mod_sinopsis]=" + synopsis + "&AktivitiBacaan[akb_mod_pengarang]=" + author + "&AktivitiBacaan[akb_mod_penerbit]=" + publisher + "&AktivitiBacaan[akb_mod_tahun_terbit]=" + year + "&AktivitiBacaan[akb_mod_tarikh_baca]=" + date;
-    xhr.onload = () => {
-        if (xhr.readyState == 302) {
-            console.log(JSON.parse(xhr.responseText));
-        } else {
-            console.log(`Error: ${xhr.status}`);
+    function sendNilam(category, language, title, is_synopsis, synopsis, author, publisher, year) {
+        const xhr = new XMLHttpRequest();
+        const key = getKey();
+        const date = getDate();
+        xhr.open("POST", "https://nilamjohor.edu.my/aktiviti-bacaan/create");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        const body =
+            "_csrf-frontend=" + key + "&AktivitiBacaan[akb_mod_kategori_bahan]=" + category + "&AktivitiBacaan[akb_mod_kategori_bahasa]=" + language + "&AktivitiBacaan[akb_mod_judul]=" + title + "&AktivitiBacaan[akb_mod_tick_sinopsis]=&AktivitiBacaan[akb_mod_tick_sinopsis]=" + is_synopsis + "&AktivitiBacaan[akb_mod_sinopsis]=" + synopsis + "&AktivitiBacaan[akb_mod_pengarang]=" + author + "&AktivitiBacaan[akb_mod_penerbit]=" + publisher + "&AktivitiBacaan[akb_mod_tahun_terbit]=" + year + "&AktivitiBacaan[akb_mod_tarikh_baca]=" + date;
+        xhr.onload = () => {
+            if (xhr.readyState == 302) {
+                console.log(JSON.parse(xhr.responseText));
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(body);
+    }
+
+    function getKey() {
+        var key = document.getElementsByName("_csrf-frontend")[0].value;
+        return key;
+    }
+
+    function getDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+
+        today = dd + '-' + mm + '-' + yyyy;
+        return today;
+    }
+
+    function doNilam(json) {
+        var is_valid = false;
+        console.log(json)
+        var obj = JSON.parse(json);
+        var language = obj.books[0].language;
+        var title = obj.books[0].title;
+        var synopsis = obj.books[0].synopsis;
+        var author = obj.books[0].author;
+        var publisher = obj.books[0].publisher;
+        var year = obj.books[0].year_of_publish;
+        var is_fiction = obj.books[0].fiction;
+        var language = language.toLowerCase();
+
+        function checkYear() {
+            if (!(typeof year == "number")) {
+                notify("Invalid year value", "Error");
+                return false;
+            }
         }
-    };
-    xhr.send(body);
-}
 
-function getKey() {
-    var key = document.getElementsByName("_csrf-frontend")[0].value;
-    return key;
-}
+        function checkLanguage(language) {
+            if (language == "english") {
+                var id_language = "20";
+                return id_language;
+            } else if (language == "bahasa melayu") {
+                var id_language = "10";
+                return id_language;
+            } else {
+                notify("Invalid language value", "Error");
+                return false;
+            }
+        }
 
-function getDate() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
+        function checkFiction(is_fiction) {
+            if (is_fiction == true) {
+                var id_category = "30";
+                return id_category;
+            } else if (is_fiction == false) {
+                var id_category = "40";
+                return id_category;
+            } else {
+                notify("Invalid category value", "Error");
+                return false;
+            }
+        }
 
-    today = dd + '-' + mm + '-' + yyyy;
-    return today;
-}
+        var id_category = checkFiction(is_fiction);
+        var id_language = checkLanguage(language);
+        var year_valid = checkYear();
+        if (id_category == false || id_language == false || year_valid == false) {
+            is_valid = false;
+        } else {
+            var is_valid = true;
+        }
 
-function doNilam(json) {
-    var is_valid = false;
-    console.log(json)
-    var obj = JSON.parse(json);
-    var language = obj.books[0].language;
-    var title = obj.books[0].title;
-    var synopsis = obj.books[0].synopsis;
-    var author = obj.books[0].author;
-    var publisher = obj.books[0].publisher;
-    var year = obj.books[0].year_of_publish;
-    var is_fiction = obj.books[0].fiction;
-    var language = language.toLowerCase();
 
-    function checkYear() {
-        if (!(typeof year == "number")) {
-            notify("Invalid year value", "Error");
+        if (is_valid) {
+            notify(id_category + " " + id_language + " " + title + " " + synopsis + " " + author + " " + publisher + " " + year, "Info")
+            sendNilam(id_category, id_language, title, 1, synopsis, author, publisher, year);
+        } else {
+            notify("Failed valid check", "Error");
             return false;
         }
     }
 
-    function checkLanguage(language) {
-        if (language == "english") {
-            var id_language = "20";
-            return id_language;
-        } else if (language == "bahasa melayu") {
-            var id_language = "10";
-            return id_language;
-        } else {
-            notify("Invalid language value", "Error");
-            return false;
-        }
+    function notify(message, type) {
+        console.log(type + ": " + message)
     }
 
-    function checkFiction(is_fiction) {
-        if (is_fiction == true) {
-            var id_category = "30";
-            return id_category;
-        } else if (is_fiction == false) {
-            var id_category = "40";
-            return id_category;
-        } else {
-            notify("Invalid category value", "Error");
-            return false;
-        }
+    function nilam(json) {
+        var text = json;
+        doNilam(text);
     }
 
-    var id_category = checkFiction(is_fiction);
-    var id_language = checkLanguage(language);
-    var year_valid = checkYear();
-    if (id_category == false || id_language == false || year_valid == false) {
-        is_valid = false;
-    } else {
-        var is_valid = true;
+    function load() {
+        var head = document.getElementsByTagName("head")[0];
+        var fontawesome = head.appendChild(document.createElement("link"));
+        fontawesome.setAttribute("rel", "stylesheet");
+        fontawesome.setAttribute("href", "https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css");
+        var ul = document.getElementById("sidebarnav");
+        var menu_li = ul.appendChild(document.createElement("li"));
+        var menu_a = menu_li.appendChild(document.createElement("a"));
+        menu_a.setAttribute("class", "waves-effect waves-dark");
+        menu_a.setAttribute("aria-expanded", "false");
+        var menu_i = menu_a.appendChild(document.createElement("i"));
+        menu_i.setAttribute("class", "fa-solid fa-sliders");
+        var menu_span = menu_a.appendChild(document.createElement("span"));
+        menu_span.setAttribute("class", "hide-menu");
+        menu_span.innerHTML = " BetterNilam Options ";
+        menu_a.setAttribute("href", "/");
     }
 
-
-    if (is_valid) {
-        notify(id_category + " " + id_language + " " + title + " " + synopsis + " " + author + " " + publisher + " " + year, "Info")
-        sendNilam(id_category, id_language, title, 1, synopsis, author, publisher, year);
-    } else {
-        notify("Failed valid check", "Error");
-        return false;
-    }
-}
-
-function notify(message, type) {
-    console.log(type + ": " + message)
-}
-
-function nilam(json) {
-    var text = json;
-    doNilam(text);
-}
-
-function load() {
-    var head = document.getElementsByTagName("head")[0];
-    var fontawesome = head.appendChild(document.createElement("link"));
-    fontawesome.setAttribute("rel", "stylesheet");
-    fontawesome.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css");
-    var ul = document.getElementById("sidebarnav");
-    var menu_li = ul.appendChild(document.createElement("li"));
-    var menu_a = menu_li.appendChild(document.createElement("a"));
-    menu_a.setAttribute("class", "waves-effect waves-dark");
-    menu_a.setAttribute("aria-expanded", "false");
-    var menu_i = menu_a.appendChild(document.createElement("i"));
-    menu_i.setAttribute("class", "fa-solid fa-sliders");
-    var menu_span = menu_a.appendChild(document.createElement("span"));
-    menu_span.setAttribute("class", "hide-menu");
-    menu_span.innerHTML = " BetterNilam Options ";
-    menu_a.setAttribute("href", "/");
-}
-
-function darkmode() {
-    var fontawesome = document.createElement("link");
-    fontawesome.rel = "stylesheet";
-    fontawesome.href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css";
-    document.head.appendChild(fontawesome);
-    var style = document.createElement("style");
-    style.innerHTML = `
+    function darkmode() {
+        var style = document.createElement("style");
+        style.innerHTML = `
   .container-fluid {
     background-color: #121212;
   }
@@ -164,9 +161,6 @@ function darkmode() {
     background-color: #2F2F2F;
     border: 2px solid #03a9f3;
     border-radius: 5px 5px 0px 0px !important;
-  }
-  .card-body {
-    border-radius: 0px 0px 5px 5px !important;
   }
   .form-body {
     color: #cccccc;
@@ -396,51 +390,240 @@ function darkmode() {
   background-color: #121212 !important;
   }
   .card-group {
-    border: 2px solid #03a9f3 !important;
     border-radius: 5px !important;
   }
+  .input-group-text {
+    color: #cccccc !important;
+  }
   `;
-    document.head.appendChild(style);
-    if (window.location.href.indexOf("https://nilamjohor.edu.my/aktiviti-bacaan/index") > -1) {
-        var btn = document.getElementsByClassName("m-l-0")[0];
-        var icon = btn.getElementsByTagName("i")[0];
-        icon.classList.remove("fas", "fa-search-minus");
-        icon.classList.add("fa-solid", "fa-rotate-right");
-        var btn2 = document.getElementsByClassName("btn-group")[0];
-        var btn22 = btn2.children[0];
-        var icon2 = btn22.getElementsByTagName("i")[0];
-        icon2.classList.remove("fas", "fa-search-plus");
-        icon2.classList.add("fa-solid", "fa-magnifying-glass");
-    }
-    var log = document.getElementsByClassName("nav-link")[2];
-    var logout = log.getElementsByTagName("i")[0];
-    logout.classList.remove("fa", "fa-power-off");
-    logout.classList.add("fa-solid", "fa-arrow-right-from-bracket");
-}
-
-function autoLogin(username, password) {
-    const xhr = new XMLHttpRequest();
-    const key = getKey();
-    xhr.open("POST", "https://nilamjohor.edu.my/site/login");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    const body =
-        "_csrf-frontend=" + key + "&LoginForm[username]=" + username + "&LoginForm[password]=" + password + "&login-button=";
-    xhr.onload = () => {
-        if (xhr.status == 302 || xhr.status == 200) {
-            window.location.href = "https://nilamjohor.edu.my/";
-        } else {
-            console.log(`Error: ${xhr.status}`);
+        document.head.appendChild(style);
+        if (window.location.href == "https://nilamjohor.edu.my/aktiviti-bacaan/index") {
+            var btn = document.getElementsByClassName("m-l-0")[0];
+            var icon = btn.getElementsByTagName("i")[0];
+            icon.classList.remove("fas", "fa-search-minus");
+            icon.classList.add("fa-solid", "fa-rotate-right");
+            var btn2 = document.getElementsByClassName("btn-group")[0];
+            var btn22 = btn2.children[0];
+            var icon2 = btn22.getElementsByTagName("i")[0];
+            icon2.classList.remove("fas", "fa-search-plus");
+            icon2.classList.add("fa-solid", "fa-magnifying-glass");
         }
-    };
-    xhr.send(body);
-}
-
-if (window.location.href.indexOf("https://nilamjohor.edu.my/site/login") > -1) {
-    autoLogin("m-9493219", "abcd@1234");
-}
+    }
 
 
-console.log("Loaded BetterNilam v" + version)
+    function autoLogin(username, password) {
+        const xhr = new XMLHttpRequest();
+        const key = getKey();
+        xhr.open("POST", "https://nilamjohor.edu.my/site/login");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        const body =
+            "_csrf-frontend=" + key + "&LoginForm[username]=" + username + "&LoginForm[password]=" + password + "&login-button=";
+        xhr.onload = () => {
+            if (xhr.status == 302 || xhr.status == 200) {
+                window.location.href = "https://nilamjohor.edu.my/";
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(body);
+    }
 
-darkmode();
+    function betterUI() {
+        var style = document.createElement("style");
+        style.innerHTML = `
+    .user-pro {
+        display: none !important;
+    }
+    .site-index > .jumbotron {
+        display: none !important;
+    }
+    `;
+        document.head.appendChild(style);
+        var log = document.getElementsByClassName("my-lg-0")[0];
+        var log2 = log.getElementsByTagName("li")[0];
+        var log3 = log2.getElementsByTagName("a")[0];
+        var logout = log3.getElementsByTagName("i")[0];
+        logout.classList.remove("fa", "fa-power-off");
+        logout.classList.add("fa-solid", "fa-arrow-right-from-bracket");
+        var user_profile = document.createElement("li");
+        user_profile.classList.add("nav-item", "right-side-toggle");
+        log.prepend(user_profile);
+        var user_profilea = document.createElement("a");
+        user_profilea.classList.add("nav-link", "waves-effect", "waves-light");
+        user_profilea.setAttribute("href", "https://nilamjohor.edu.my/murid/view");
+        user_profile.appendChild(user_profilea);
+        var user_profilei = document.createElement("i");
+        user_profilei.classList.add("fa-regular", "fa-user");
+        user_profilea.appendChild(user_profilei);
+        var user_profilespan = document.createElement("span");
+        user_profilespan.style.color = "#cccccc"
+        user_profilespan.style.marginLeft = "10px"
+        var prof_name = document.getElementsByClassName('media-body')[0].getElementsByTagName('span')[0].innerHTML;
+        user_profilespan.innerHTML = prof_name;
+        user_profilea.appendChild(user_profilespan);
+        user_profilea.style.fontWeight = "500";
+        var leftbar = document.getElementsByClassName("mr-auto")[0];
+        var tambah_buku = document.createElement("li");
+        tambah_buku.classList.add("nav-item");
+        leftbar.appendChild(tambah_buku);
+        var tambah_bukua = document.createElement("a");
+        tambah_bukua.classList.add("nav-link", "waves-effect", "waves-light");
+        tambah_bukua.setAttribute("href", "https://nilamjohor.edu.my/aktiviti-bacaan/create");
+        tambah_buku.appendChild(tambah_bukua);
+        var tambah_bukui = document.createElement("i");
+        tambah_bukui.classList.add("fa-regular", "fa-plus");
+        tambah_bukua.appendChild(tambah_bukui);
+        var tambah_bukuspan = document.createElement("span");
+        tambah_bukuspan.style.color = "#cccccc"
+        tambah_bukuspan.style.marginLeft = "10px"
+        tambah_bukuspan.style.fontSize = "15px";
+        tambah_bukuspan.innerHTML = "Tambah aktiviti bacaan"
+        tambah_bukua.appendChild(tambah_bukuspan);
+
+        async function homepage() {
+            if (window.location.href == "https://nilamjohor.edu.my" || window.location.href == "https://nilamjohor.edu.my/" || window.location.href == "https://nilamjohor.edu.my/site") {
+                var site_index = document.getElementsByClassName("site-index")[0];
+                var cardgroup1 = document.createElement("div");
+                cardgroup1.classList.add("card-group", "row");
+                var cardwrapper1 = document.createElement("div");
+                cardwrapper1.classList.add("card", "col-md-6");
+                var cardbody1 = document.createElement("div");
+                cardbody1.classList.add("card-body");
+                var cardbodywrapper1 = document.createElement("div");
+                cardbodywrapper1.classList.add("row");
+                var cardheader1 = document.createElement("div");
+                cardheader1.classList.add("card-header", "bg-info");
+                var cardheaderwrapper1 = document.createElement("h4");
+                cardheaderwrapper1.classList.add("m-b-0", "text-white");
+                cardheaderwrapper1.innerHTML = "Aktiviti Bacaan";
+                var cardicon1 = document.createElement("i");
+                cardicon1.classList.add("fa-regular", "fa-chart-simple");
+                cardicon1.style.marginRight = "10px";
+                cardheaderwrapper1.innerText = "Overview";
+                cardheaderwrapper1.prepend(cardicon1);
+                cardheader1.appendChild(cardheaderwrapper1);
+                cardwrapper1.appendChild(cardheader1);
+                site_index.appendChild(cardgroup1);
+                cardgroup1.appendChild(cardwrapper1);
+                cardwrapper1.appendChild(cardbody1);
+                cardbody1.appendChild(cardbodywrapper1);
+
+
+
+            }
+            async function fetchBooks() {
+                var response = await fetch("https://nilamjohor.edu.my/aktiviti-bacaan/index");
+                var data = await response.text();
+                var books = doStuffWithParsedBooks(data);
+                return books;
+
+            }
+            function doStuffWithParsedBooks(data) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(data, "text/html");
+                var table = doc.getElementsByClassName("kv-grid-table")[0];
+                var tbody = table.getElementsByTagName("tbody")[0];
+                var books = [];
+                for (var i = 0; i < 5; i++) {
+                    var book = {};
+                    var row = tbody.children[i];
+                    var book_id = row.children[0].innerText;
+                    var book_name = row.children[2].innerText;
+                    var book_genre = row.children[3].innerText;
+                    var book_language = row.children[4].innerText;
+                    var book_date = row.children[5].innerText;
+                    book.name = book_name;
+                    book.id = book_id;
+                    book.genre = book_genre;
+                    book.language = book_language;
+                    book.date = book_date;
+                    books.push(book);
+                    console.log(book);
+                }
+                console.log(books);
+                return books;
+            }
+            const bookss = fetchBooks();
+            var list_book = await bookss;
+            var cardwrapper2 = document.createElement("div");
+            cardwrapper2.classList.add("card");
+            var cardbody2 = document.createElement("div");
+            cardbody2.classList.add("card-body");
+            var cardheader2 = document.createElement("div");
+            cardheader2.classList.add("card-header", "bg-info");
+            var cardheaderwrapper2 = document.createElement("h4");
+            cardheaderwrapper2.classList.add("m-b-0", "text-white");
+            cardheaderwrapper2.innerText = "Recent books";
+            var cardicon2 = document.createElement("i");
+            cardicon2.classList.add("fas", "fa-book");
+            cardicon2.style.marginRight = "10px";
+            var cardbodytable2 = document.createElement("table");
+            cardbodytable2.classList.add("table");
+            var cardbodytablehead2 = document.createElement("thead");
+            var cardbodytableheadrow2 = document.createElement("tr");
+            var cardbodytableheadrowth21 = document.createElement("th");
+            var cardbodytableheadrowth22 = document.createElement("th");
+            var cardbodytableheadrowth23 = document.createElement("th");
+            var cardbodytableheadrowth24 = document.createElement("th");
+            var cardbodytableheadrowth25 = document.createElement("th");
+            cardbodytableheadrowth21.style.width = "5%";
+            cardbodytableheadrowth22.style.width = "13%";
+            cardbodytableheadrowth23.style.width = "15%";
+            cardbodytableheadrowth24.style.width = "15%";
+            cardbodytableheadrowth25.style.width = "15%";
+            cardbodytableheadrowth21.innerText = "#";
+            cardbodytableheadrowth22.innerText = "Name";
+            cardbodytableheadrowth23.innerText = "Genre";
+            cardbodytableheadrowth24.innerText = "Language";
+            cardbodytableheadrowth25.innerText = "Date";
+            var cardbodytablebody2 = document.createElement("tbody");
+            for (var i = 0; i < list_book.length; i++) {
+                var cardbodytablebodyrow2 = document.createElement("tr");
+                var cardbodytablebodyrowth21 = document.createElement("td");
+                var cardbodytablebodyrowth22 = document.createElement("td");
+                var cardbodytablebodyrowth23 = document.createElement("td");
+                var cardbodytablebodyrowth24 = document.createElement("td");
+                var cardbodytablebodyrowth25 = document.createElement("td");
+                cardbodytablebodyrowth21.innerText = list_book[i].id;
+                cardbodytablebodyrowth22.innerText = list_book[i].name;
+                cardbodytablebodyrowth23.innerText = list_book[i].genre;
+                cardbodytablebodyrowth24.innerText = list_book[i].language;
+                cardbodytablebodyrowth25.innerText = list_book[i].date;
+                cardbodytablebodyrow2.appendChild(cardbodytablebodyrowth21);
+                cardbodytablebodyrow2.appendChild(cardbodytablebodyrowth22);
+                cardbodytablebodyrow2.appendChild(cardbodytablebodyrowth23);
+                cardbodytablebodyrow2.appendChild(cardbodytablebodyrowth24);
+                cardbodytablebodyrow2.appendChild(cardbodytablebodyrowth25);
+                cardbodytablebody2.appendChild(cardbodytablebodyrow2);
+            }
+
+            cardbodytableheadrow2.appendChild(cardbodytableheadrowth21);
+            cardbodytableheadrow2.appendChild(cardbodytableheadrowth22);
+            cardbodytableheadrow2.appendChild(cardbodytableheadrowth23);
+            cardbodytableheadrow2.appendChild(cardbodytableheadrowth24);
+            cardbodytableheadrow2.appendChild(cardbodytableheadrowth25);
+            cardbodytablehead2.appendChild(cardbodytableheadrow2);
+            cardbodytable2.appendChild(cardbodytablehead2);
+            cardbodytable2.appendChild(cardbodytablebody2);
+            cardbody2.appendChild(cardbodytable2);
+            cardwrapper2.appendChild(cardheader2);
+            cardwrapper2.appendChild(cardbody2);
+            cardgroup1.appendChild(cardwrapper2);
+            cardheaderwrapper2.prepend(cardicon2);
+            cardheader2.appendChild(cardheaderwrapper2);
+
+
+
+
+
+        }
+        homepage();
+
+    }
+
+
+    console.log("Loaded BetterNilam v" + version)
+    load();
+    darkmode();
+    betterUI();
 })();
