@@ -35,11 +35,10 @@ function sendNilam(
     "&AktivitiBacaan[akb_mod_tarikh_baca]=" +
     date;
   xhr.onload = () => {
-    if (xhr.readyState == 200) {
-      console.log(JSON.parse(xhr.responseText));
+    if (xhr.status == 200) {
       console.log(`Success: ${title}`);
     } else {
-      console.log(`Error: ${xhr.status}`);
+      console.log(`Error: ${title}`);
     }
   };
   xhr.send(body);
@@ -102,7 +101,7 @@ function doNilam(json) {
     }
 
     // send
-    console.log(`Sending ${pJson[i]}`);
+    console.log(`Sending ${title}`);
     sendNilam(
       category,
       language,
