@@ -1,6 +1,7 @@
 Generate a list of random books with rules or options below:
-- 3 books in the list
+- 7 books in the list
 - Language: BM or English
+- Truely random topics
 
 - Must contain:
 - title of the book (title key for JSON)(according to the book's language)
