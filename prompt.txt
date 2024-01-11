@@ -1,7 +1,8 @@
 Generate a list of random books with rules or options below:
-- 7 books in the list
+- 50 books in the list
 - Language: BM or English
-- Make more fiction books
+- Make more fiction books (story like books)
+- Less science category books
 
 - Must contain:
 - title of the book (title key for JSON)(according to the book's language)
