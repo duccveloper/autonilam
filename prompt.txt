@@ -3,6 +3,7 @@ Generate a list of random books with rules or options below:
 - Language: BM or English
 - Make more fiction books (story like books)
 - Less science category books
+- Without repeat the book name or story in the list of previously read books
 
 - Must contain:
 - title of the book (title key for JSON)(according to the book's language)
@@ -17,3 +18,6 @@ Generate a list of random books with rules or options below:
 - book can be real (exist in this world), or imagined (made up)
 - generate the list in JSON form: 
 {"books":[...]}
+
+
+ list of previously read books:
