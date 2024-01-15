@@ -1,4 +1,4 @@
-Generate a list of random books with rules or options below:
+Generate a list of random STORY books with rules or options below:
 - 50 books in the list
 - Language: BM or English
 - Make more fiction books (story like books)
