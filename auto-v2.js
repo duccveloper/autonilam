@@ -149,7 +149,7 @@ function generatePrompt(bookCount) {
   var bookList = [];
 
   // Fetch past read books
-  fetch(
+  return fetch(
     "https://nilamjohor.edu.my/aktiviti-bacaan/index?AktivitiBacaanSearch[pageSize]=1000"
   )
     .then((response) => response.text())
@@ -162,8 +162,7 @@ function generatePrompt(bookCount) {
       });
     })
     .then(() => {
-      var prompt = `
-    Generate a list of random STORY books with rules or options below:
+      var prompt = `Generate a list of random STORY books with rules or options below:
   - ${bookCount} books in the list
   - Language: BM or English
   - Make more fiction books (story like books)
@@ -188,14 +187,13 @@ function generatePrompt(bookCount) {
    list of previously read books:
    ${JSON.stringify(bookList)}
     `;
-
-      console.log(prompt);
+      return prompt;
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+
 }
-generatePrompt();
 
 // GUI Injection
 function injectGUI() {
@@ -321,6 +319,7 @@ function injectAutoNilamGUI() {
             type="number"
             class="form-control col-5"
             placeholder="Book count"
+            id="bookCount"
           />
         </div>
         <div class="row m-t-20">
@@ -335,7 +334,8 @@ function injectAutoNilamGUI() {
           <textarea
             class="form-control input-group-prepend row"
             readonly=""
-            style="overflow: auto; scrollbar-width: thin"
+            style="overflow: auto; scrollbar-width: thin; height: 20em"
+            id="promptOutput"
           ></textarea
           ><a
             class="btn btn-info"
@@ -357,11 +357,18 @@ function injectAutoNilamGUI() {
   container.appendChild(autoNilamGUI);
 
   var submitBtn = document.getElementById("submit-btn");
+  document.getElementById("promptOutput").value = "Generating prompt...";
   submitBtn.addEventListener("click", function () {
-    var bookCount = document.getElementsByClassName("form-control")[0].value;
-    var prompt = generatePrompt(bookCount);
-    document.getElementsByClassName("form-control")[1].value = prompt;
+    var bookCount = document.getElementById("bookCount").value;
+    generatePrompt(bookCount).then((prompt) => {
+      document.getElementById("promptOutput").value = prompt;
+    });
+
   });
 }
-injectAutoNilamGUI();
+
+if (detectSite() == "auto-nilam") {
+  injectAutoNilamGUI();
+}
+
 injectGUI();
