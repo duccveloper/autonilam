@@ -308,6 +308,28 @@ function fetchPastReadBooks() {
     });
 }
 
+// Data Management
+function data(action, key, value) {
+  if (action == "set") {
+    document.cookie = `${key}=${value}; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/`;
+    return true;
+  }
+  if (action == "get") {
+    var cookies = document.cookie.split(";");
+    var cookie = cookies.find((cookie) => cookie.includes(key));
+    if (cookie) {
+      var value = cookie.split("=")[1];
+      return value;
+    } else {
+      return false;
+    }
+  }
+  if (action == "delete") {
+    document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    return true;
+  }
+}
+
 // Prompt Generation
 function generatePrompt(bookCount) {
   return fetchPastReadBooks().then((bookList) => {
@@ -324,196 +346,6 @@ Preferred genres: ${settings.autoNilamPreferredGenres}
 }
 
 // End of AutoNilam Functions
-
-
-function injectCSS() {
-  var css = document.createElement("style");
-  css.innerHTML = `:root {
-    /* Colors */
-    --overlay-color: #afafaf90;
-    --secondary-color: #92929290;
-    --topbar-color: #12121270;
-    --sidebar-color: #12121270;
-    --footer-color: #12121250;
-    --card-color: #6a6a6a60;
-    --card-header-color: #43434360;
-    --page-title-color: #12121270;
-    --preloader-background: #121212;
-
-    --page-title-text-color: #fff;
-    --topbar-text-color: #fff;
-    --sidebar-text-color: #fff;
-    --footer-text-color: #fff;
-    --card-text-color: #fff;
-    --card-header-text-color: #fff;
-    --overlay-text-color: #fff;
-    --secondary-text-color: #fff;
-    --hover-color: #03a9f3;
-
-    /* Misc */
-    --overlay-blur: 50px;
-    --border-radius: 10px;
-    --body-background: url("https://i.ibb.co/K6CbnB2/rsz-wp11825066-simple-color-4k-wallpapers.jpg")
-}
-
-.topbar {
-    background: var(--topbar-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-}
-
-.topbar * {
-    color: var(--topbar-text-color);
-}
-
-.left-sidebar {
-    background: var(--sidebar-color);
-    backdrop-filter: blur(var(--overlay-blur));
-}
-
-.left-sidebar * {
-    color: var(--sidebar-text-color) !important;
-}
-
-.left-sidebar *:hover:not(.nav-small-cap) {
-    color: var(--hover-color) !important;
-}
-
-.page-titles {
-    background: var(--page-title-color);
-    backdrop-filter: blur(var(--overlay-blur));
-}
-
-.page-titles * {
-    color: var(--page-title-text-color) !important;
-}
-
-.page-wrapper {
-    background: transparent;
-}
-
-.footer {
-    background: var(--footer-color);
-    backdrop-filter: blur(var(--overlay-blur));
-    border: none;
-    color: var(--footer-text-color) !important;
-}
-
-.card {
-    background: var(--card-color);
-    backdrop-filter: blur(var(--overlay-blur));
-    border-radius: var(--border-radius);
-}
-
-.card * {
-    color: var(--card-text-color) !important;
-}
-
-.card-header {
-    background-color: var(--card-header-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-    border-radius: var(--border-radius) !important;
-}
-
-.card-header * {
-    color: var(--card-header-text-color) !important;
-}
-
-.form-group {
-    background: transparent;
-}
-
-.form-control {
-    background-color: var(--overlay-color) !important;
-}
-
-.form-control:disabled, .form-control[readonly] {
-    background-color: var(--secondary-color) !important;
-    color: var(--secondary-text-color) !important;
-}
-
-.form-control:focus {
-    background-color: var(--overlay-color) !important;
-    color: var(--overlay-text-color) !important;
-}
-
-.select2-selection {
-    background-color: var(--overlay-color) !important;
-}
-
-.select2-selection * {
-    color: var(--overlay-text-color) !important;
-}
-
-.select2-dropdown, .dropdown-menu {
-    background-color: var(--overlay-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-}
-
-.select2-results__option {
-    background-color: transparent !important;
-}
-
-.select2-results__option[aria-selected=true] {
-    background-color: var(--overlay-color) !important;
-    color: var(--overlay-text-color) !important;
-    backdrop-filter: brightness(1.2);
-}
-
-.select2-results__option--highlighted, .dropdown-item:hover, .dropdown-item:focus {
-    background-color: var(--secondary-color) !important;
-    color: var(--secondary-text-color) !important;
-    backdrop-filter: brightness(1.2);
-}
-
-.kv-table-header {
-    background: var(--overlay-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-}
-
-body {
-    background: var(--body-background);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: var(--card-text-color);
-}
-
-.mini-sidebar .sidebar-nav #sidebarnav > li:hover > a {
-    background: var(--overlay-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-    border-radius: var(--border-radius);
-}
-
-.mini-sidebar .sidebar-nav #sidebarnav > li > ul {
-    background: var(--overlay-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-}
-
-.preloader {
-    background: var(--preloader-background);
-}
-
-.feeds li:hover {
-    background: var(--overlay-color) !important;
-    backdrop-filter: blur(var(--overlay-blur));
-    border-radius: var(--border-radius);
-}
-
-.site-error {
-    color: var(--overlay-text-color) !important;
-}
-
-::placeholder {
-  filter: brightness(0.7);
-}
-
-`;
-
-  document.head.appendChild(css);
-
-
-}
-
 // GUI Injection for AutoNilam
 function injectAutoNilamGUI() {
   // generate prompt section
@@ -684,6 +516,249 @@ function injectAutoNilamGUI() {
   });
 }
 
+function applyTheme(setting) {
+  if (data("get", "theme") == false) {
+    data("set", "theme", JSON.stringify(setting));
+  } else {
+    data("set", "theme", JSON.stringify(setting));
+  }
+}
+
+function injectCSS(preset, setting) {
+  if (preset == "default") {
+    if (document.getElementById("NiceNilam-css")) {
+      document.getElementById("NiceNilam-css").remove();
+    }
+    return true;
+  }
+
+  if (!document.getElementById("NiceNilam-css")) {
+    var css = document.createElement("style");
+    css.id = "NiceNilam-css";
+  } else {
+    var css = document.getElementById("NiceNilam-css");
+  }
+
+  Object.keys(setting).forEach((key) => {
+    if (setting[key] == "") {
+      setting[key] = "unset";
+    }
+  });
+
+  if (setting["txt-primary"] !== "unset") {
+    Object.keys(setting).forEach((key) => {
+      if (key.includes("txt-")) {
+        setting[key] = setting["txt-primary"];
+      }
+    });
+  }
+
+  css.innerHTML = `:root {
+    /* Colors */
+    --overlay-color: ${setting["bg-overlay"]};
+    --secondary-color: ${setting["bg-secondary"]};
+    --topbar-color: ${setting["bg-topbar"]};
+    --sidebar-color: ${setting["bg-sidebar"]};
+    --footer-color: ${setting["bg-footer"]};
+    --card-color: ${setting["bg-card"]};
+    --card-header-color: ${setting["bg-card-header"]};
+    --page-title-color: ${setting["bg-page-title"]};
+    --preloader-background: ${setting["bg-preloader"]};
+
+    --page-title-text-color: ${setting["txt-page-title"]};
+    --topbar-text-color: ${setting["txt-topbar"]};
+    --sidebar-text-color: ${setting["txt-sidebar"]};
+    --footer-text-color: ${setting["txt-footer"]};
+    --card-text-color: ${setting["txt-card"]};
+    --card-header-text-color: ${setting["txt-card-header"]};
+    --overlay-text-color: ${setting["txt-overlay"]};
+    --secondary-text-color: ${setting["txt-secondary"]};
+    --hover-color: ${setting["hover-color"]};
+
+    /* Misc */
+    --overlay-blur: ${setting["overlay-blur"]};
+    --border-radius: ${setting["border-radius"]};
+    --body-background: ${setting["bg"]};
+}
+
+.topbar {
+    background: var(--topbar-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+}
+
+.topbar * {
+    color: var(--topbar-text-color);
+}
+
+.left-sidebar {
+    background: var(--sidebar-color);
+    backdrop-filter: blur(var(--overlay-blur));
+}
+
+
+.left-sidebar * {
+    color: var(--sidebar-text-color);
+}
+
+.left-sidebar i {
+    color: var(--sidebar-text-color) !important;
+}
+
+.left-sidebar .nav-small-cap {
+    color: var(--sidebar-text-color) !important;
+}
+
+.sidebar-nav ul li a:hover * {
+    color: var(--hover-color) !important;
+}
+
+.page-titles {
+    background: var(--page-title-color);
+    backdrop-filter: blur(var(--overlay-blur));
+}
+
+.page-titles * {
+    color: var(--page-title-text-color) !important;
+}
+
+.page-wrapper {
+    background: transparent;
+}
+
+.footer {
+    background: var(--footer-color);
+    backdrop-filter: blur(var(--overlay-blur));
+    border: none;
+    color: var(--footer-text-color) !important;
+}
+
+.card {
+    background: var(--card-color);
+    backdrop-filter: blur(var(--overlay-blur));
+    border-radius: var(--border-radius);
+}
+
+.card * {
+    color: var(--card-text-color) !important;
+}
+
+.card-header {
+    background-color: var(--card-header-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+    border-radius: var(--border-radius) !important;
+}
+
+.card-header * {
+    color: var(--card-header-text-color) !important;
+}
+
+.form-group {
+    background: transparent;
+}
+
+.form-control {
+    background-color: var(--overlay-color) !important;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: var(--secondary-color) !important;
+    color: var(--secondary-text-color) !important;
+}
+
+.form-control:focus {
+    background-color: var(--overlay-color) !important;
+    color: var(--overlay-text-color) !important;
+}
+
+.select2-selection {
+    background-color: var(--overlay-color) !important;
+}
+
+.select2-selection * {
+    color: var(--overlay-text-color) !important;
+}
+
+.select2-dropdown, .dropdown-menu {
+    background-color: var(--overlay-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+}
+
+.select2-results__option {
+    background-color: transparent !important;
+}
+
+.select2-results__option[aria-selected=true] {
+    background-color: var(--overlay-color) !important;
+    color: var(--overlay-text-color) !important;
+    backdrop-filter: brightness(1.2);
+}
+
+.select2-results__option--highlighted, .dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--secondary-color) !important;
+    color: var(--secondary-text-color) !important;
+    backdrop-filter: brightness(1.2);
+}
+
+.kv-table-header {
+    background: var(--overlay-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+}
+
+body {
+    background: var(--body-background);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--card-text-color);
+}
+
+.mini-sidebar .sidebar-nav #sidebarnav > li:hover > a {
+    background: var(--overlay-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+    border-radius: var(--border-radius);
+}
+
+.mini-sidebar .sidebar-nav #sidebarnav > li > ul {
+    background: var(--overlay-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+}
+
+.preloader {
+    background: var(--preloader-background);
+}
+
+.feeds li:hover {
+    background: var(--overlay-color) !important;
+    backdrop-filter: blur(var(--overlay-blur));
+    border-radius: var(--border-radius);
+}
+
+.site-error {
+    color: var(--overlay-text-color) !important;
+}
+
+::placeholder {
+  filter: brightness(0.7);
+}
+
+.btn-outline-secondary {
+  color: var(--overlay-text-color) !important;
+  background: var(--overlay-color) !important;
+}
+
+.input-group-text {
+  background-color: var(--overlay-color) !important;
+}
+
+`;
+
+  if (!document.getElementById("NiceNilam-css")) {
+    document.head.appendChild(css);
+  }
+
+  return true;
+}
+
 // NiceNilam Functions
 function injectNiceNilamGUI() {
   var container = document.getElementsByClassName("container-fluid")[0];
@@ -697,8 +772,7 @@ function injectNiceNilamGUI() {
 </div>
   `;
   var niceNilamGUI = document.createElement("div");
-  niceNilamGUI.innerHTML = `
-  <div class="card">
+  niceNilamGUI.innerHTML = `<div class="card">
   <div class="card-header bg-info">
     <h4 class="mb-0 text-white">
       <i class="fas fa-palette m-r-5"></i> NiceNilam
@@ -718,30 +792,28 @@ function injectNiceNilamGUI() {
 
       <div class="row m-t-20">
         <div class="col-md-6">
-          <div
-            class="form-group highlight-addon field-aktivitibacaan-akb_mod_kategori_bahan required"
+          <label class="has-star"
+            >Preset Themes</label
           >
-            <label class="has-star" for="aktivitibacaan-akb_mod_kategori_bahan"
-              >Themes</label
-            >
+          <div class="form-group">
+            <button type="button" class="btn btn-info" id="pTheme-default">Default (No theme)</button>
 
-            <div class="dropdown dropright">
-              <button
-                type="button"
-                class="btn btn-primary dropdown-toggle"
-                data-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Select theme
-              </button>
-              <div class="dropdown-menu" style="">
-                <span class="dropdown-header" href="#">Preset themes </span>
-                <a class="dropdown-item" id="theme-default">None</a>
-                <a class="dropdown-item" id="theme-dark">Dark Mode</a>
-                <span class="dropdown-header">Custom themes </span>
-              </div>
-            </div>
+            <button type="button" class="btn btn-info" id="pTheme-dark">Dark</button>
           </div>
+          <span id="theme-status"></span>
+        </div>
+        <div class="col-md-6">
+          <label class="has-star"
+            >Theme management</label
+          >
+          <div class="input-group">
+            <textarea class="form-control input-group-prepend row"></textarea>
+          </div>
+          <div class="m-t-10 row">
+            <button type="button" class="col btn btn-warning" id="theme-export">Export</button
+            ><button type="button" class="col btn btn-success" id="theme-import">Import</button>
+          </div>
+          <span class="m-t-10 row" id="themeMgmt-status">Preset Themes</span>
         </div>
       </div>
 
@@ -756,27 +828,21 @@ function injectNiceNilamGUI() {
       <h3 class="m-t-10">Theme</h3>
       <div class="m-t-20 row">
         <div class="form-group col">
-          <h4>Theme Name</h4>
+          <h4>Background</h4>
           <input
             type="text"
-            class="form-control"
-            id="theme-name"
-            placeholder="Value
-    "
+            class="form-control m-t-5"
+            autocomplete="off"
+            id="bg"
+            placeholder="Value"
           />
-        </div>
-      </div>
-      <h3 class="m-t-10">Main</h3>
-      <div class="m-t-20 row">
-        <div class="form-group col">
-          <h4>Background</h4>
-          <input type="text" class="form-control" id="bg" placeholder="Value" />
         </div>
         <div class="form-group col">
           <h4>Overlay blur</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="overlay-blur"
             placeholder="Value (0px to disable)"
           />
@@ -785,9 +851,33 @@ function injectNiceNilamGUI() {
           <h4>Border radius</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="border-radius"
             placeholder="Value (0px to disable)"
+          />
+        </div>
+        <div class="form-group col">
+          <h4>Primary text color</h4>
+          <span style="
+    font-size:  x-small;
+">Overrides the text colors of individual elements</span>
+          <input
+            type="text"
+            class="form-control m-t-5"
+            autocomplete="off"
+            id="txt-primary"
+            placeholder="Value"
+          />
+        </div>
+        <div class="form-group col">
+          <h4>Hover color</h4>
+          <input
+            type="text"
+            class="form-control m-t-5"
+            autocomplete="off"
+            id="hover-color"
+            placeholder="Value"
           />
         </div>
       </div>
@@ -797,12 +887,14 @@ function injectNiceNilamGUI() {
           <h4>Overlay</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-overlay"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-overlay"
             placeholder="Text color"
           />
@@ -811,12 +903,14 @@ function injectNiceNilamGUI() {
           <h4>Secondary</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-secondary"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-secondary"
             placeholder="Text color"
           />
@@ -825,12 +919,14 @@ function injectNiceNilamGUI() {
           <h4>Topbar</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-topbar"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-topbar"
             placeholder="Text color"
           />
@@ -839,12 +935,14 @@ function injectNiceNilamGUI() {
           <h4>Sidebar</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-sidebar"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-sidebar"
             placeholder="Text color"
           />
@@ -853,12 +951,14 @@ function injectNiceNilamGUI() {
           <h4>Footer</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-footer"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-footer"
             placeholder="Text color"
           />
@@ -867,12 +967,14 @@ function injectNiceNilamGUI() {
           <h4>Card</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-card"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-card"
             placeholder="Text color"
           />
@@ -881,12 +983,14 @@ function injectNiceNilamGUI() {
           <h4>Page title</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-page-title"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-page-title"
             placeholder="Text color"
           />
@@ -895,12 +999,14 @@ function injectNiceNilamGUI() {
           <h4>Card header</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-card-header"
             placeholder="Background color"
           /><input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="txt-card-header"
             placeholder="Text color"
           />
@@ -909,14 +1015,18 @@ function injectNiceNilamGUI() {
           <h4>Preloader</h4>
           <input
             type="text"
-            class="form-control"
+            class="form-control m-t-5"
+            autocomplete="off"
             id="bg-preloader"
             placeholder="Background color"
           />
         </div>
       </div>
-      <div class="form-actions m-t-30">
-        <button type="submit" id="apply-btn" class="btn btn-success">
+      <div class="form-group m-t-30">
+        <button id="preview-btn" class="btn btn-info btn-action">
+          <i class="fas fa-eye"></i> Preview
+        </button>
+        <button id="apply-btn" class="btn btn-success btn-action">
           <i class="fas fa-check"></i> Apply
         </button>
         <button type="reset" class="btn btn-inverse">Reset</button>
@@ -924,11 +1034,103 @@ function injectNiceNilamGUI() {
     </form>
   </div>
 </div>
-
 `;
 
   container.appendChild(niceNilamGUI);
 
+  var actionBtns = document.querySelectorAll(".btn-action");
+
+  actionBtns.forEach((btn) => {
+    btn.addEventListener("click", function (event) {
+      var target = event.target.id;
+      event.preventDefault();
+      var inputs = document.getElementsByTagName("input");
+      var setting = {};
+      for (var i = 0; i < inputs.length; i++) {
+        setting[inputs[i].id] = inputs[i].value;
+      }
+      if (target == "preview-btn") {
+        previewTheme(setting);
+      } else if (target == "apply-btn") {
+        if (setting["theme-name"] == "") {
+          setting["theme-name"] = "Custom Theme";
+        }
+        setting["preset"] = false;
+        applyTheme(setting);
+      }
+    });
+  });
+
+  var defaultBtn = document.getElementById("pTheme-default");
+
+  defaultBtn.addEventListener("click", function () {
+    injectCSS("default");
+    data("delete", "theme");
+
+    var inputs = document.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].value = "";
+    }
+    
+    var status = document.getElementById("theme-status");
+    status.innerHTML = "NiceNilam disabled, default theme applied.";
+  });
+
+  var defaultDarkBtn = document.getElementById("pTheme-dark");
+
+  defaultDarkBtn.addEventListener("click", function () {
+    var setting = {
+      "txt-primary": "#fff",
+      "bg-overlay": "#afafaf90",
+      "bg-secondary": "#92929290",
+      "bg-topbar": "#12121270",
+      "bg-sidebar": "#12121270",
+      "bg-footer": "#12121250",
+      "bg-card": "#6a6a6a60",
+      "bg-card-header": "#43434360",
+      "bg-page-title": "#12121270",
+      "bg-preloader": "#121212",
+      "txt-page-title": "#fff",
+      "txt-topbar": "#fff",
+      "txt-sidebar": "#fff",
+      "txt-footer": "#fff",
+      "txt-card": "#fff",
+      "txt-card-header": "#fff",
+      "txt-overlay": "#fff",
+      "txt-secondary": "#fff",
+      "hover-color": "#03a9f3",
+      "overlay-blur": "50px",
+      "border-radius": "10px",
+      bg: "#121212",
+    };
+    injectCSS(false, setting);
+
+    var inputs = document.getElementsByTagName("input");
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].value = setting[inputs[i].id];
+    }
+
+    applyTheme(setting);
+
+    var status = document.getElementById("theme-status");
+    status.innerHTML = "Dark theme applied.";
+  });
+}
+
+function previewTheme(setting) {
+  injectCSS(false, setting);
+}
+
+if (detectSite() == "auto-nilam") {
+  injectAutoNilamGUI();
+} else if (detectSite() == "nice-nilam") {
+  injectNiceNilamGUI();
+}
+
+if (data("get", "theme") == false) {
+  injectCSS("default");
+} else {
+  injectCSS(false, JSON.parse(data("get", "theme")));
 }
 
 // Site Detection
@@ -1025,11 +1227,4 @@ function injectSidebar() {
   document.head.appendChild(fontAwesome);
 }
 
-if (detectSite() == "auto-nilam") {
-  injectAutoNilamGUI();
-} else if (detectSite() == "nice-nilam") {
-  injectNiceNilamGUI();
-}
-
 injectSidebar();
-injectCSS();
