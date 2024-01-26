@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header bg-info">
+    <h4 class="mb-0 text-white"><i class="fas fa-bolt m-r-5"></i> EzNilam</h4>
+  </div>
+  <div class="card-body">
+    <div class="form-body">
+      <h3 class="box-title m-t-10">
+        <i class="fas fa-angle-double-right"></i> Book input
+      </h3>
+      <small>Just press TAB, TAB, TAB and ENTER! </small>
+      <hr class="m-t-0 m-b-0" />
+      <div class="row m-t-20">
+        <div class="col form-group">
+          <label>Title</label>
+          <input type="text" id="title" class="form-control" />
+        </div>
+        <div class="col form-group">
+          <label>Author</label>
+          <input type="text" id="author" class="form-control" />
+        </div>
+        <div class="col form-group">
+          <label>Publisher</label>
+          <input type="text" id="publisher" class="form-control" />
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="col form-group">
+          <label>Year of publish</label>
+          <input type="number" id="yearOfPublish" class="form-control" />
+        </div>
+      </div>
+      <div class="row" id="sypnosisContainer">
+        <div class="col form-group">
+          <label>Sypnosis</label>
+          <textarea type="text" id="sypnosis" class="form-control"></textarea>
+          <button id="generateSypnosis" class="btn btn-success">
+            Generate sypnosis
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"></div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button id="send" class="btn btn-success">
+        <i class="fas fa-paper-plane-top"></i> Send
+      </button>
+      <button id="reset" class="btn btn-inverse">Reset</button>
+    </div>
+    <p id="status" class="m-t-30"></p>
+  </div>
+</div>
