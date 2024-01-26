@@ -1,4 +1,1 @@
-var script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = 'https://cdn.jsdelivr.net/gh/du-cc/BetterNilam@main/source.js';
-document.head.appendChild(script);
+document.head.appendChild(Object.assign(document.createElement('script'), { type: 'text/javascript', src: 'https://cdn.jsdelivr.net/gh/du-cc/BetterNilam@main/source.js' }));
