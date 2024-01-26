@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/du-cc/BetterNilam/main/icons/icon.svg" alt="BetterNilam Icon" width="300"/>
+<img src="https://raw.githubusercontent.com/du-cc/BetterNilam/main/icons/icon.svg" alt="BetterNilam Icon" width="250"/>
 </p>
 <h1 align="center">BetterNilam</h1>
 <h3 align="center">Upgrading your nilam experience</h3>
