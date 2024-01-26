@@ -205,4 +205,8 @@ body {
   color: var(--overlay-text-color) !important;
 }
 
+.btn {
+    color: #fff !important;
+}
+
 
