@@ -6,7 +6,7 @@
 <h4>Current modules (public):</h4><code>NiceNilam, EzNilam</code>
 <br>
 
-# Install (requires UserScript extention eg: Tampermonkey)
+# Install (requires UserScript extension eg: Tampermonkey)
 # [Lastest version](https://raw.githubusercontent.com/du-cc/BetterNilam/main/betterNilam.user.js)
 
 ## Manually load (not recommended)
