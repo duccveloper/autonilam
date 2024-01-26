@@ -1,0 +1,27 @@
+ <div class="col-12">
+  <div class="card">
+    <div class="card-header bg-info">
+      <h4 class="mb-0 text-white">
+        <i class="fas fa-sparkles m-r-5"></i> AutoNilam
+      </h4>
+    </div>
+
+    <div class="card-body" id="cardBody">
+      <h3 class="box-title m-t-20"><i class="fas fa-input-text"></i> Input</h3>
+      <div class="m-t-20 input-group">
+        <textarea
+          class="form-control input-group-prepend row"
+          style="overflow: auto; scrollbar-width: thin; height: 10em"
+          id="JSONInput"
+          placeholder="Paste output from chatGPT here"
+        ></textarea>
+      </div>
+      <div class="row m-t-20" style="align-items: center;">
+        <button type="submit" id="autoNilam-btn" class="btn btn-success">
+          <i class="fas fa-sparkles"></i> AutoNilam
+        </button>
+        <span class="m-l-10 col" id="autoNilam-status"></span>
+      </div>
+    </div>
+  </div>
+</div>
