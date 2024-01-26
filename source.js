@@ -35,7 +35,6 @@ async function sendNilam(
   }
 
   return getKey().then((resolvedKey) => {
-    statusElement(false, "Sending", title);
     var date = getDate();
     key = resolvedKey;
 
@@ -74,8 +73,6 @@ async function sendNilam(
     });
   });
 }
-
-
 
 // Data Management
 function data(action, key, value) {
@@ -128,6 +125,15 @@ async function webFetch(type) {
         return data;
       });
   }
+  if (type == "theme-default") {
+    return fetch(
+      "https://raw.githubusercontent.com/du-cc/BetterNilam/main/themes/default.json"
+    )
+      .then((response) => response.text())
+      .then((data) => {
+        return data;
+      });
+  }
 }
 
 // GUI Injection
@@ -147,7 +153,7 @@ async function inject(type, arg) {
   }
 
   // NiceNilam
-  if (type == "NiceNilam") {
+  if (type == "niceNilam") {
     var style = document.createElement("style");
     style.innerHTML = `
   .clr-field button {
@@ -174,9 +180,9 @@ async function inject(type, arg) {
       customThemeBtn.disabled = false;
 
       customThemeBtn.addEventListener("click", function () {
-        var setting = JSON.parse(data("get", "customTheme"));
-        loadInput(setting);
-        theme("apply", setting);
+        var customSetting = JSON.parse(data("get", "customTheme"));
+        loadInput(customSetting);
+        theme("apply", customSetting);
 
         var status = document.getElementById("theme-status");
         status.innerHTML = "Custom theme applied.";
@@ -190,15 +196,15 @@ async function inject(type, arg) {
         var target = event.target.id;
         event.preventDefault();
         var inputs = document.getElementsByTagName("input");
-        var setting = {};
+        var newSetting = {};
         for (var i = 0; i < inputs.length; i++) {
-          setting[inputs[i].id] = inputs[i].value;
+          newSetting[inputs[i].id] = inputs[i].value;
         }
         if (target == "preview-btn") {
-          theme("preview", setting);
+          theme("preview", newSetting);
         } else if (target == "apply-btn") {
-          setting["preset"] = false;
-          theme("apply", setting);
+          newSetting["preset"] = false;
+          theme("apply", newSetting);
         }
       });
     });
@@ -224,10 +230,10 @@ async function inject(type, arg) {
     var defaultDarkBtn = document.getElementById("pTheme-dark");
 
     defaultDarkBtn.addEventListener("click", function () {
-      webFetch("theme-dark").then((setting) => {
-        setting = JSON.parse(setting);
-        loadInput(setting);
-        theme("apply", setting);
+      webFetch("theme-dark").then((darkSetting) => {
+        darkSetting = JSON.parse(darkSetting);
+        loadInput(darkSetting);
+        theme("apply", darkSetting);
 
         var status = document.getElementById("theme-status");
         status.innerHTML = "Dark theme applied.";
@@ -247,12 +253,12 @@ async function inject(type, arg) {
     var status = document.getElementById("themeMgmt-status");
 
     exportBtn.addEventListener("click", function () {
-      var setting = JSON.parse(data("get", "customTheme"));
-      if (setting == false) {
+      var exportSetting = JSON.parse(data("get", "customTheme"));
+      if (exportSetting == false) {
         status.innerHTML = "No custom theme found.";
         return false;
       }
-      var json = JSON.stringify(setting);
+      var json = JSON.stringify(exportSetting);
       var blob = new Blob([json], { type: "application/json" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
@@ -272,18 +278,20 @@ async function inject(type, arg) {
         var file = input.files[0];
         var reader = new FileReader();
         reader.onload = function (e) {
-          var setting = JSON.parse(e.target.result);
-          theme("preview", setting);
-          loadInput(setting);
+          var importSetting = JSON.parse(e.target.result);
+          theme("preview", importSetting);
+          loadInput(importSetting);
           status.innerHTML = "Theme imported, click apply to save.";
         };
         reader.readAsText(file);
       });
     });
+
+    return true;
   }
 
   // Sidebar
-  if (type == "Sidebar") {
+  if (type == "sidebar") {
     var fontAwesome = document.createElement("link");
     fontAwesome.setAttribute("rel", "stylesheet");
     fontAwesome.setAttribute(
@@ -322,15 +330,39 @@ async function inject(type, arg) {
     betterNilamSidebarText.innerHTML = " NiceNilam ";
     betterNilamSidebarText.className = "hide-menu";
 
+    var ezNilamSidebarClass = document.createElement("li");
+    ezNilamSidebarClass.className = "nav-small-cap pt-2";
+    ezNilamSidebarClass.innerHTML = "--- EzNilam";
+
+    var ezNilamSidebar = document.createElement("li");
+
+    var ezNilamSidebarLink = document.createElement("a");
+    ezNilamSidebarLink.setAttribute("href", "/ez-nilam");
+
+    var ezNilamSidebarIcon = document.createElement("i");
+    ezNilamSidebarIcon.className = "fa-regular fa-book";
+
+    var ezNilamSidebarText = document.createElement("span");
+    ezNilamSidebarText.innerHTML = " EzNilam ";
+    ezNilamSidebarText.className = "hide-menu";
+
     betterNilamSidebarLink.appendChild(betterNilamSidebarIcon);
     betterNilamSidebarLink.appendChild(betterNilamSidebarText);
     betterNilamSidebar.appendChild(betterNilamSidebarLink);
     sidebar.appendChild(betterNilamSidebarClass);
     sidebar.appendChild(betterNilamSidebar);
 
+    ezNilamSidebarLink.appendChild(ezNilamSidebarIcon);
+    ezNilamSidebarLink.appendChild(ezNilamSidebarText);
+    ezNilamSidebar.appendChild(ezNilamSidebarLink);
+    sidebar.appendChild(ezNilamSidebarClass);
+    sidebar.appendChild(ezNilamSidebar);
+
     document.head.appendChild(fontAwesome);
     document.head.appendChild(coloris);
     document.head.appendChild(colorisJS);
+
+    return true;
   }
 
   // CSS
@@ -350,24 +382,10 @@ async function inject(type, arg) {
       var css = document.getElementById("NiceNilam-css");
     }
 
-    Object.keys(arg).forEach((key) => {
-      if (setting[key] == "") {
-        var oldSetting = JSON.parse(data("get", "theme"));
-        setting[key] = oldSetting[key];
-      }
-    });
-
-    if (setting["txt-primary"] !== "unset") {
-      Object.keys(setting).forEach((key) => {
-        if (key.includes("txt-")) {
-          setting[key] = setting["txt-primary"];
-        }
-      });
-    }
-
     var cssText = await webFetch("css");
-    Object.keys(setting).forEach(key => {
-      const regex = new RegExp(`\\$\\{setting\\["${key}"\\]\\}`, 'g');
+
+    Object.keys(setting).forEach((key) => {
+      const regex = new RegExp(`\\$\\{setting\\["${key}"\\]\\}`, "g");
       cssText = cssText.replace(regex, setting[key]);
     });
 
@@ -379,8 +397,11 @@ async function inject(type, arg) {
 
     return true;
   }
+
+  return false;
 }
 
+// Theme Management
 function theme(type, setting) {
   if (type == "apply") {
     if (setting["preset"] == true) {
@@ -400,25 +421,22 @@ function theme(type, setting) {
   }
 }
 
-function previewTheme(setting) {
-  inject("CSS", setting);
-}
-
 // Site Detection
 function detectSite() {
   var url = window.location.href;
   if (url == "https://nilamjohor.edu.my/auto-nilam") {
-    return "auto-nilam";
-  }
-  if (url == "https://nilamjohor.edu.my/auto-nilam/settings") {
-    return "auto-nilam-settings";
+    return "autoNilam";
   }
   if (url == "https://nilamjohor.edu.my/nice-nilam") {
-    return "nice-nilam";
+    return "niceNilam";
   }
   if (url == "https://nilamjohor.edu.my/aktiviti-bacaan/create") {
     return "create";
   }
+  if (url == "https://nilamjohor.edu.my/ez-nilam") {
+    return "ezNilam";
+  }
+  return false;
 }
 
 // Coloris
@@ -436,10 +454,8 @@ function checkColoris() {
 }
 
 checkColoris();
-inject("Sidebar");
-if (detectSite() == "nice-nilam") {
-  inject("NiceNilam");
-}
+inject("sidebar");
+inject(detectSite());
 
 if (data("get", "theme") == false) {
   inject("CSS", "default");
