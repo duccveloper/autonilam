@@ -5,7 +5,7 @@
 // @description  Upgrade your Nilam experience.
 // @author       du-cc
 // @match        https://nilamjohor.edu.my/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=edu.my
+// @icon         https://raw.githubusercontent.com/du-cc/BetterNilam/main/icons/icon.svg
 // ==/UserScript==
 
 (function() {
