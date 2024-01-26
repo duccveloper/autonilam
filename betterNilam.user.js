@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         betterNilam
-// @namespace    huh
+// @namespace    https://nilamjohor.edu.my/
 // @version      RELEASE
-// @description  idk
+// @description  Upgrade your Nilam experience.
 // @author       du-cc
 // @match        https://nilamjohor.edu.my/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=edu.my
-// @grant        none
 // ==/UserScript==
 
 (function() {
