@@ -7,7 +7,7 @@
 <br>
 
 # Install (requires UserScript extention eg: Tampermonkey)
-[Lastest version](https://raw.githubusercontent.com/du-cc/BetterNilam/main/betterNilam.user.js)
+# [Lastest version](https://raw.githubusercontent.com/du-cc/BetterNilam/main/betterNilam.user.js)
 
 ## Manually load (not recommended)
 ```js
