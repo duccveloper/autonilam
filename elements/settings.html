@@ -1,0 +1,215 @@
+<div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-info">
+          <h4 class="mb-0 text-white">
+            <i class="fas fa-book m-r-5"></i> EzNilam
+          </h4>
+        </div>
+
+        <div class="card-body">
+          <div class="form-body">
+            <div class="row m-t-10">
+              <label class="" style="scale: 1.3; margin-left: 3em">
+                <input
+                  type="checkbox"
+                  id="EzNilam-enable"
+                  style="margin-right: 1em"
+                />Enable (Show in sidebar)</label
+              >
+            </div>
+            <div class="row m-t-30">
+              <div class="col-md-6 form-group">
+                <label>Default Language</label>
+
+                <div class="m-t-10" style="gap: 1em; display: flex">
+                  <button
+                    type="button"
+                    class="btn btn-primary ezNilam-lang"
+                    id="EzNilam-langEng"
+                  >
+                    English
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-primary ezNilam-lang"
+                    id="EzNilam-langBM"
+                  >
+                    BM</button
+                  ><button
+                    type="button"
+                    class="btn btn-primary ezNilam-lang"
+                    id="EzNilam-langOther"
+                  >
+                    Other
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label>Default Book Type</label>
+
+                <div class="m-t-10" style="gap: 1em; display: flex">
+                  <button
+                    type="button"
+                    class="btn btn-primary ezNilam-fic"
+                    id="EzNilam-Fic"
+                  >
+                    Fiction
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-primary ezNilam-fic"
+                    id="EzNilam-nonFic"
+                  >
+                    Non-Fiction
+                  </button>
+                </div>
+              </div>
+            </div>
+            <h3 class="box-title m-t-30">Sypnosis</h3>
+            <hr class="m-t-0 m-b-30" />
+            <div class="row m-t-5">
+              <label class="" style="scale: 1.3; margin-left: 2em">
+                <input
+                  type="checkbox"
+                  id="EzNilam-sypnosis"
+                  style="margin-right: 1em"
+                />Enable</label
+              >
+            </div>
+            <div class="row m-t-20">
+              <div class="col form-group">
+                <label>Default sypnosis</label
+                ><textarea
+                  id="EzNilam-sypnosis-txt"
+                  class="form-control"
+                  rows="6"
+                ></textarea>
+                <small style="white-space: pre"
+                  >List of available arguments: (which will be autofilled with
+                  information) \${title} - Title of the book \${author} - Author
+                  \${publisher} - Publisher \${yearOfPublish} - Year of publish
+                  \${language} - Book language
+                </small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6"></div>
+            </div>
+          </div>
+          <div class="form-actions m-t-30">
+            <button type="submit" id="EzNilam-apply" class="btn btn-success">
+              <i class="fas fa-check"></i> Apply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-info">
+          <h4 class="mb-0 text-white">
+            <i class="fas fa-sparkles m-r-5"></i> NiceNilam
+          </h4>
+        </div>
+
+        <div class="card-body">
+          <div class="form-body">
+            <div class="row m-t-10">
+              <label class="" style="scale: 1.3; margin-left: 3em">
+                <input
+                  type="checkbox"
+                  id="NiceNilam-enable"
+                  style="margin-right: 1em"
+                />Enable (Show in sidebar)</label
+              >
+            </div>
+
+            <button
+              type="button"
+              class="m-t-30 btn btn-danger"
+              id="NiceNilam-del"
+            >
+              Delete ALL NiceNilam data
+            </button>
+          </div>
+
+          <div class="form-actions m-t-30">
+            <button type="submit" id="NiceNilam-apply" class="btn btn-success">
+              <i class="fas fa-check"></i> Apply
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-info">
+          <h4 class="mb-0 text-white">
+            <i class="fas fa-key m-r-5"></i> AutoLogin
+          </h4>
+        </div>
+
+        <div class="card-body">
+          <div class="form-body">
+            <div class="row m-t-10">
+              <label class="" style="scale: 1.3; margin-left: 2em">
+                <input
+                  type="checkbox"
+                  id="AutoLogin-enable"
+                  style="margin-right: 1em"
+                />Enable</label
+              >
+            </div>
+            <div class="form-group m-t-20">
+              <label>Moe ID:</label>
+              <div class="input-group">
+                <input type="text" id="AutoLogin-usr" class="form-control" />
+                <div class="input-group-append">
+                  <span class="input-group-text">@moe-dl.edu.my</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group m-t-20">
+              <label>password:</label>
+              <input type="text" class="form-control" id="AutoLogin-pwd" />
+            </div>
+            <button
+              type="button"
+              class="m-t-30 btn btn-danger"
+              id="AutoLogin-del"
+            >
+              Delete ALL AutoLogin data
+            </button>
+          </div>
+
+          <div class="form-actions m-t-30">
+            <button type="submit" id="AutoLogin-apply" class="btn btn-success">
+              <i class="fas fa-check"></i> Apply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header bg-danger">
+      <h4 class="mb-0 text-white">
+        <i class="fas fa-warning m-r-5"></i> Danger Zone
+      </h4>
+    </div>
+
+    <div class="card-body">
+      <div class="form-body">
+        <button type="button" class="btn btn-danger" id="BetterNilam-del">
+          Delete ALL BETTERNILAM data (IRREVERSIBLE)
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
