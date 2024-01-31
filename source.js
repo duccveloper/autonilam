@@ -263,6 +263,16 @@ async function webFetch(type) {
         return data;
       });
   }
+  if (type == "NiceNilam-guide") {
+    return fetch(
+      "https://raw.githubusercontent.com/du-cc/BetterNilam/main/elements/niceNilam-guide.html"
+    )
+      .then((response) => response.text())
+      .then((data) => {
+        log("Success", "webFetch", "NiceNilam guide fetched.");
+        return data;
+      });
+  }
 
   log("Error", "webFetch", "Type not found.");
   return false;
@@ -1113,6 +1123,20 @@ async function inject(type, arg) {
     return true;
   }
 
+  if (type == "NiceNilam-guide") {
+    log("Info", "inject", "Injecting NiceNilam guide...");
+    replace404("NiceNilam Guide");
+
+    var niceNilamGuideGUI = document.createElement("div");
+
+    log("Info", "inject", "Fetching NiceNilam guide...");
+    niceNilamGuideGUI.innerHTML = await webFetch("NiceNilam-guide");
+    container.appendChild(niceNilamGuideGUI);
+
+    log("Success", "inject", "NiceNilam guide injected.");
+    return true;
+  }
+
   return false;
 }
 
@@ -1176,6 +1200,10 @@ function detectSite() {
     log("Success", "detectSite", "Site detected: Login.");
     return "login";
   }
+  if (url == "https://nilamjohor.edu.my/nice-nilam/guide") {
+    log("Success", "detectSite", "Site detected: NiceNilam guide.");
+    return "NiceNilam-guide";
+  }
   return false;
 }
 
@@ -1192,7 +1220,6 @@ function log(status, type, message) {
       return false;
     }
   }
-  //    console.log(`[BetterNilam][${type}] ${status.toUpperCase()}: ${message}`);
 
   if (get()) {
     if (status == "Error") {
