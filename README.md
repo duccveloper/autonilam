@@ -1,3 +1,7 @@
+# THIS PROJECT IS ARCHIVED BECAUSE OF NEW NILAM SYSTEM
+## maybe will fix but f4 no time
+## AutoNilam script here: https://github.com/du-cc/BetterNilam/blob/main/AutoNilam.js
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/du-cc/BetterNilam/main/icons/icon.svg" alt="BetterNilam Icon" width="250"/>
 </p>
