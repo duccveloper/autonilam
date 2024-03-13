@@ -2,7 +2,10 @@
 ## maybe will fix but f4 no time
 ## AutoNilam script here: https://github.com/du-cc/BetterNilam/blob/main/AutoNilam.js
 ## feel free to see how these work together lol, [give feedback here](https://forms.gle/pZG8rdTAu64wPVL28)
-
+<br>
+<code>This <b>WAS</b> capable to automate nilam submission integrated with chatGPT, styling the nilam website and ease your nilam submission experience by make ot simple with dynamic synopsis generation.</code>
+<br>
+<hr>
 <p align="center">
 <img src="https://raw.githubusercontent.com/du-cc/BetterNilam/main/icons/icon.svg" alt="BetterNilam Icon" width="250"/>
 </p>
