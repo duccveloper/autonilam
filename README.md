@@ -3,7 +3,8 @@
 ## AutoNilam script here: https://github.com/du-cc/BetterNilam/blob/main/AutoNilam.js
 ## feel free to see how these work together lol, [give feedback here](https://forms.gle/pZG8rdTAu64wPVL28)
 <br>
-<code>This <b>WAS</b> capable to automate nilam submission integrated with chatGPT, styling the nilam website and ease your nilam submission experience by make ot simple with dynamic synopsis generation.</code>
+<code>It was capable to automate Nilam submissions seamlessly with ChatGPT integration, website styling, and dynamic synopsis generation for a simplified experience.
+</code>
 <br>
 <hr>
 
