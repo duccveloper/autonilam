@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">BetterNilam</h1>
 <h3 align="center">Upgrading your nilam experience</h3>
-<h4>Current modules (public):</h4><code>NiceNilam, EzNilam, AutoLogin</code>
+<h4>Current modules (public):</h4><code>NiceNilam, EzNilam, AutoLogin, AutoNilam</code>
 <br>
 
 # Install (requires UserScript extension eg: Tampermonkey)
