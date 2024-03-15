@@ -1,6 +1,7 @@
 # THIS PROJECT IS ARCHIVED BECAUSE OF NEW NILAM SYSTEM
 ## maybe will fix but f4 no time
 ## AutoNilam script here: https://github.com/du-cc/BetterNilam/blob/main/AutoNilam.js
+## Watch their demos: [autoNilam](https://youtu.be/xcrj74HDDp0), [niceNilam](https://youtu.be/9Se4pEbDXQM), ~~ezNilam, autoLogin (undocumented sadly)~~
 ## feel free to see how these work together lol, [give feedback here](https://forms.gle/pZG8rdTAu64wPVL28)
 <br>
 <code>It was capable to automate Nilam submissions seamlessly with ChatGPT integration, website styling, and dynamic synopsis generation for a simplified experience.
@@ -25,7 +26,7 @@
 
 - Fetches a custom theme from cookies, setting it to default if not present.
 
-## BetterNilam
+## NiceNilam
 
 - **Functions Involved**: `inject()`, `webFetch()`, `data()`
 
