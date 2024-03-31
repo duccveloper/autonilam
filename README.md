@@ -9,8 +9,8 @@
 <br>
 <hr>
 
-
-# How It Works
+<details>
+<summary>How It Works</summary>
 
 ## Injecting and Initialization
 
@@ -71,7 +71,7 @@
     - Creates a status element for the sending status.
 
     - Loops to parse data and sends a POST request to [this endpoint](https://nilamjohor.edu.my/aktiviti-bacaan/create) for every book.
-
+</details>
 # Install (requires UserScript extension eg: Tampermonkey)
 # [Latest version](https://raw.githubusercontent.com/du-cc/BetterNilam/main/betterNilam.user.js)
 
